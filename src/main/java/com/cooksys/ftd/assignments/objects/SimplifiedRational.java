@@ -3,6 +3,10 @@ package com.cooksys.ftd.assignments.objects;
 import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
 
 public class SimplifiedRational implements IRational {
+	
+	private int numerator;
+	private int denominator;
+	private SimplifiedRational Obj;
     /**
      * Determines the greatest common denominator for the given values
      *
@@ -12,7 +16,8 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if a <= 0 or b < 0
      */
     public static int gcd(int a, int b) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+    	if(b < 0) { throw new IllegalArgumentException(); }
+        return gcd(Math.abs(b) % Math.abs(a), Math.abs(a));
     }
 
     /**
@@ -29,6 +34,7 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if the given denominator is 0
      */
     public static int[] simplify(int numerator, int denominator) throws IllegalArgumentException {
+    	gcd(Math.abs(numerator), Math.abs(denominator));
         throw new MissingImplementationException();
     }
 
@@ -48,20 +54,22 @@ public class SimplifiedRational implements IRational {
         throw new MissingImplementationException();
     }
 
-    /**
+    /** //throw new MissingImplementationException();
      * @return the numerator of this rational number
      */
     @Override
     public int getNumerator() {
-        throw new MissingImplementationException();
+    	this.numerator = numerator;
+    	return numerator;
     }
 
-    /**
+    /** //throw new MissingImplementationException();
      * @return the denominator of this rational number
      */
     @Override
     public int getDenominator() {
-        throw new MissingImplementationException();
+    	this.denominator = denominator;
+    	return denominator; 
     }
 
     /**
@@ -77,17 +85,25 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public SimplifiedRational construct(int numerator, int denominator) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+    	if (denominator == 0 ) { throw new IllegalArgumentException(); }
+    	return new SimplifiedRational(numerator, denominator);
     }
 
     /**
      * @param obj the object to check this against for equality
-     * @return true if the given obj is a rational value and its
+     * @return true if the given obj is a Simplified Rational value and its
      * numerator and denominator are equal to this rational value's numerator and denominator,
      * false otherwise
      */
     @Override
     public boolean equals(Object obj) {
+    	if (this == obj) // if this.obj = obj
+			return true;
+		if (obj == null) // null wouldn't be correct
+			return false;
+		if (getClass() != obj.getClass()) // if the classes are not the same
+			return false;
+		//if (obj.instanceOf(SimplifiedRational))
         throw new MissingImplementationException();
     }
 

@@ -3,6 +3,11 @@ package com.cooksys.ftd.assignments.objects;
 import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
 
 public class Rational implements IRational {
+	private int numerator;
+	private int denominator;
+	private Rational obj;
+	
+	
     /**
      * Constructor for rational values of the type:
      * <p>
@@ -15,23 +20,25 @@ public class Rational implements IRational {
      * @throws IllegalArgumentException if the given denominator is 0
      */
     public Rational(int numerator, int denominator) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+    	if (denominator == 0) { throw new IllegalArgumentException(); }
     }
 
-    /**
+    /** //throw new MissingImplementationException();
      * @return the numerator of this rational number
      */
     @Override
     public int getNumerator() {
-        throw new MissingImplementationException();
+    	this.numerator = numerator;
+    	return numerator;
     }
 
-    /**
+    /** //throw new MissingImplementationException();
      * @return the denominator of this rational number
      */
     @Override
     public int getDenominator() {
-        throw new MissingImplementationException();
+    	this.denominator = denominator;
+    	return denominator; 
     }
 
     /**
@@ -47,7 +54,8 @@ public class Rational implements IRational {
      */
     @Override
     public Rational construct(int numerator, int denominator) throws IllegalArgumentException {
-        throw new MissingImplementationException();
+    	if (denominator == 0 ) { throw new IllegalArgumentException(); }
+    	return new Rational(numerator, denominator);
     }
 
     /**
@@ -58,6 +66,13 @@ public class Rational implements IRational {
      */
     @Override
     public boolean equals(Object obj) {
+    	if (this == obj) // if this.obj = obj
+			return true;
+		if (obj == null) // null wouldn't be correct
+			return false;
+		if (getClass() != obj.getClass()) // if the classes are not the same
+			return false;
+    	//if (obj.instanceOf(Rational));
         throw new MissingImplementationException();
     }
 

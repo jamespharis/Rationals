@@ -30,7 +30,9 @@ interface IRational {
 	 *             if the given denominator is 0
 	 */
 	IRational construct(int numerator, int denominator) throws IllegalArgumentException;
-
+	
+	
+	
 	/**
 	 * negation of rational values
 	 * <p>
@@ -38,25 +40,26 @@ interface IRational {
 	 *
 	 * @return the negation of this
 	 */
-	default IRational negate() {
-
-		return construct(getNumerator() * -1, getDenominator());
-
-	}
-
+	default IRational negate() { return construct(getNumerator() * -1, getDenominator()); }
+	
+	
 	/**
 	 * inversion of rational values
 	 * <p>
 	 * definition: `invert(n / d) = d / n`
 	 *
 	 * @return the inversion of this
-	 * @throws IllegalStateException
-	 *             if the numerator of this rational value is 0
+	 * @throws IllegalStateException if the numerator of this rational value is 0           
 	 */
 	default IRational invert() throws IllegalStateException {
-		throw new MissingImplementationException();
+		if (getNumerator() == 0 ) { throw new IllegalStateException(); }
+		return construct(getDenominator(), getNumerator());
 	}
 
+	
+	
+	
+	
 	/**
 	 * addition of rational values
 	 * <p>
@@ -65,13 +68,26 @@ interface IRational {
 	 * @param that
 	 *            the value to add to this
 	 * @return the sum of this and that
-	 * @throws IllegalArgumentException
-	 *             if that is null
+	 * @throws IllegalArgumentException if that is null          
 	 */
 	default IRational add(IRational that) throws IllegalArgumentException {
-		throw new MissingImplementationException();
+		if (that == null) { throw new IllegalArgumentException(); }
+		int n1 = that.getNumerator();
+		int n2 = this.getNumerator();
+		int d1 = that.getDenominator();
+		int d2 = this.getDenominator();
+		IRational addition = construct((n1 / d1) + (n2 / d2), 0);
+		//IRational addition = construct((n1 * d2) + (n2 * d1) / (d1 * d2), 0);
+		return addition;
+		//throw new MissingImplementationException();
+
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * subtraction of rational values
 	 * <p>
@@ -84,9 +100,20 @@ interface IRational {
 	 *             if that is null
 	 */
 	default IRational sub(IRational that) throws IllegalArgumentException {
-		throw new MissingImplementationException();
+		if (that == null) { throw new IllegalArgumentException(); }
+		int n1 = that.getNumerator();
+		int n2 = this.getNumerator();
+		int d1 = that.getDenominator();
+		int d2 = this.getDenominator();
+		IRational subtraction = construct((n1 * d2) - (n2 * d1) / (d1 * d2), 0);
+		return subtraction;
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * multiplication of rational values
 	 * <p>
@@ -99,9 +126,20 @@ interface IRational {
 	 *             if that is null
 	 */
 	default IRational mul(IRational that) throws IllegalArgumentException {
-		throw new MissingImplementationException();
+		if (that == null) { throw new IllegalArgumentException(); }
+		int n1 = that.getNumerator();
+		int n2 = this.getNumerator();
+		int d1 = that.getDenominator();
+		int d2 = this.getDenominator();
+		IRational multiplication = construct((n1 * n2) / (d1 * d2), 0);
+		return multiplication;
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * division of rational values
 	 * <p>
@@ -114,6 +152,16 @@ interface IRational {
 	 *             if that is null or if the numerator of that is 0
 	 */
 	default IRational div(IRational that) throws IllegalArgumentException {
-		throw new MissingImplementationException();
+		if ((that == null) || (that.getNumerator() == 0)) { throw new IllegalArgumentException(); }
+		int n1 = that.getNumerator();
+		int n2 = this.getNumerator();
+		int d1 = that.getDenominator();
+		int d2 = this.getDenominator();
+		IRational division = construct((n1 / d1) / (n2 / d2), 0);
+		return division;
+		
+		
+		
+		
 	}
 }
