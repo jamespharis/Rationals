@@ -6,7 +6,6 @@ public class SimplifiedRational implements IRational {
 	
 	private int numerator;
 	private int denominator;
-	//private SimplifiedRational Obj;
 	
 	
     /**
@@ -19,9 +18,14 @@ public class SimplifiedRational implements IRational {
      */
     public static int gcd(int a, int b) throws IllegalArgumentException {
     	if((a <= 0) || (b < 0)) { throw new IllegalArgumentException(); }
-        return gcd(b % a, a);
-    }
+    	while ( b != 0)
+    	  { int t = a % b;
+    		a = b;  b = t;
+    	  }
+    	return a;
+    } // using Euclid Algorithm
 
+    
     /**
      * Simplifies the numerator and denominator of a rational value.
      * <p>
@@ -49,6 +53,7 @@ public class SimplifiedRational implements IRational {
         //throw new MissingImplementationException();
     }
 
+    
     /**
      * Constructor for rational values of the type:
      * <p>
@@ -63,8 +68,12 @@ public class SimplifiedRational implements IRational {
      */
     public SimplifiedRational(int numerator, int denominator) throws IllegalArgumentException {
     	if (denominator == 0) { throw new IllegalArgumentException(); }
-    	this.numerator = numerator;
-    	this.denominator = denominator;
+    	else if (numerator != 0) 
+    	{ 
+    		int[] simp = simplify(numerator, denominator);
+    		this.numerator = simp[0];
+        	this.denominator = simp[1];
+        }
     }
 
 
@@ -74,6 +83,7 @@ public class SimplifiedRational implements IRational {
     @Override
     public int getDenominator() { return denominator; }
 
+    
     /**
      * Specializable constructor to take advantage of shared code between Rational and SimplifiedRational
      * <p>
@@ -86,11 +96,13 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if the given denominator is 0
      */
     @Override
-    public SimplifiedRational construct(int numerator, int denominator) throws IllegalArgumentException {
+    public SimplifiedRational construct(int numerator, int denominator) throws IllegalArgumentException 
+    {
     	if (denominator == 0 ) { throw new IllegalArgumentException(); }
     	return new SimplifiedRational(numerator, denominator);
     }
 
+    
     /**
      * @param obj the object to check this against for equality
      * @return true if the given obj is a Simplified Rational value and its
@@ -113,6 +125,7 @@ public class SimplifiedRational implements IRational {
     	return false;
     }
 
+    
     /**
      * If this is positive, the string should be of the form `numerator/denominator`
      * <p>
@@ -120,13 +133,12 @@ public class SimplifiedRational implements IRational {
      *
      * @return a string representation of this rational value
      */
-    @Override
+    @Override	// basic toString returns memory address
     public String toString() {
-    	// basic toString returns memory address
-    	if ((getNumerator() > 0 && getDenominator() > 0) || (getNumerator() < 0 && getDenominator() < 0))
-    	 { return getNumerator()+"/"+getDenominator(); }
-    	if ((getNumerator() > 0 && getDenominator() < 0) || (getNumerator() < 0 && getDenominator() > 0)) 
-    	 { return "-"+getNumerator()+"/"+getDenominator(); }
-        return "Fraction is undefined or zero.";
+    	if ((getNumerator() > 0 && getDenominator() > 0)) { return Math.abs(getNumerator())+"/" +Math.abs(getDenominator()); }		//   +/+
+    	if ((getNumerator() < 0 && getDenominator() < 0)) { return Math.abs(getNumerator())+"/" +Math.abs(getDenominator()); }		//   -/-
+    	if ((getNumerator() < 0 && getDenominator() > 0)) { return getNumerator()+"/" +Math.abs(getDenominator()); }				//   -/+
+    	if ((getNumerator() > 0 && getDenominator() < 0)) { return "-"+getNumerator()+"/" +Math.abs(getDenominator()); }			//   +/-
+    	return getNumerator()+"/"+getDenominator();
     }
 }

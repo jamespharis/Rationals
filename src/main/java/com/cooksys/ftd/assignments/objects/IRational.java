@@ -26,7 +26,6 @@ interface IRational {
 	IRational construct(int numerator, int denominator) throws IllegalArgumentException;
 	
 	
-	
 	/**
 	 * negation of rational values
 	 * <p>
@@ -51,9 +50,6 @@ interface IRational {
 	}
 
 	
-	
-	
-	
 	/**
 	 * addition of rational values
 	 * <p>
@@ -74,10 +70,6 @@ interface IRational {
 	}
 
 	
-	
-	
-	
-	
 	/**
 	 * subtraction of rational values
 	 * <p>
@@ -91,17 +83,13 @@ interface IRational {
 	 */
 	default IRational sub(IRational that) throws IllegalArgumentException {
 		if (that == null) { throw new IllegalArgumentException(); }
-		int n1 = that.getNumerator();
-		int n2 = this.getNumerator();
-		int d1 = that.getDenominator();
-		int d2 = this.getDenominator();
+		int n1 = this.getNumerator(); // this & that are switched for sub & div
+		int n2 = that.getNumerator();
+		int d1 = this.getDenominator();
+		int d2 = that.getDenominator();
 		return construct((n1 * d2) - (n2 * d1) , (d1 * d2));
 	}
 
-	
-	
-	
-	
 	
 	/**
 	 * multiplication of rational values
@@ -124,10 +112,6 @@ interface IRational {
 	}
 
 	
-	
-	
-	
-	
 	/**
 	 * division of rational values
 	 * <p>
@@ -141,11 +125,10 @@ interface IRational {
 	 */
 	default IRational div(IRational that) throws IllegalArgumentException {
 		if ((that == null) || (that.getNumerator() == 0)) { throw new IllegalArgumentException(); }
-		int n1 = that.getNumerator();
-		int n2 = this.getNumerator();
-		int d1 = that.getDenominator();
-		int d2 = this.getDenominator();
-		return construct((n1 * d2) , (d1 * n2));		
+		int n1 = this.getNumerator(); // this & that are switched for sub & div
+		int n2 = that.getNumerator();
+		int d1 = this.getDenominator();
+		int d2 = that.getDenominator();
+		return construct(n1 * d2, d1 * n2);		
 	}
-	
 }

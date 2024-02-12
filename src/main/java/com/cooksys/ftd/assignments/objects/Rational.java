@@ -5,7 +5,6 @@ package com.cooksys.ftd.assignments.objects;
 public class Rational implements IRational {
 	private int numerator;
 	private int denominator;
-	//private Rational obj;
 	
 	
     /**
@@ -25,12 +24,14 @@ public class Rational implements IRational {
     	this.denominator = denominator;
     }
 
+    
     @Override
     public int getNumerator() { return numerator; }
 
     @Override
     public int getDenominator() { return denominator; }
 
+    
     /**
      * Specializable constructor to take advantage of shared code between Rational and SimplifiedRational
      * <p>
@@ -48,6 +49,7 @@ public class Rational implements IRational {
     	return new Rational(numerator, denominator);
     }
 
+    
     /**
      * @param obj the object to check this against for equality
      * @return true if the given obj is a rational value and its
@@ -70,6 +72,7 @@ public class Rational implements IRational {
     	return false;
     }
 
+    
     /**
      * If this is positive, the string should be of the form `numerator/denominator`
      * <p>
@@ -77,13 +80,13 @@ public class Rational implements IRational {
      *
      * @return a string representation of this rational value
      */
-    @Override
+    @Override	// basic toString returns memory address
     public String toString() {
-    	// basic toString returns memory address
-    	if ((getNumerator() > 0 && getDenominator() > 0) || (getNumerator() < 0 && getDenominator() < 0))
-    	 { return getNumerator()+"/"+getDenominator(); }
-    	if ((getNumerator() > 0 && getDenominator() < 0) || (getNumerator() < 0 && getDenominator() > 0)) 
-    	 { return "-"+getNumerator()+"/"+getDenominator(); }
-        return "Fraction is undefined or zero.";
+    	if ((getNumerator() > 0 && getDenominator() > 0)) { return Math.abs(getNumerator())+"/" +Math.abs(getDenominator()); }		//   +/+
+    	if ((getNumerator() < 0 && getDenominator() < 0)) { return Math.abs(getNumerator())+"/" +Math.abs(getDenominator()); }		//   -/-
+    	if ((getNumerator() < 0 && getDenominator() > 0)) { return getNumerator()+"/" +Math.abs(getDenominator()); }				//   -/+
+    	if ((getNumerator() > 0 && getDenominator() < 0)) { return "-"+getNumerator()+"/" +Math.abs(getDenominator()); }			//   +/-
+    	return getNumerator()+"/"+getDenominator();
+        //return "Fraction is undefined or zero.";
     }
 }
