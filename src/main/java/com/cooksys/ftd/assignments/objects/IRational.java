@@ -1,17 +1,11 @@
 package com.cooksys.ftd.assignments.objects;
 
-import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
+//import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
 
 interface IRational {
 
-	/**
-	 * @return the numerator of this rational number
-	 */
 	int getNumerator();
 
-	/**
-	 * @return the denominator of this rational number
-	 */
 	int getDenominator();
 
 	/**
@@ -76,11 +70,7 @@ interface IRational {
 		int n2 = this.getNumerator();
 		int d1 = that.getDenominator();
 		int d2 = this.getDenominator();
-		IRational addition = construct((n1 / d1) + (n2 / d2), 0);
-		//IRational addition = construct((n1 * d2) + (n2 * d1) / (d1 * d2), 0);
-		return addition;
-		//throw new MissingImplementationException();
-
+		return construct((n1 * d2) + (n2 * d1) , (d1 * d2));
 	}
 
 	
@@ -105,8 +95,7 @@ interface IRational {
 		int n2 = this.getNumerator();
 		int d1 = that.getDenominator();
 		int d2 = this.getDenominator();
-		IRational subtraction = construct((n1 * d2) - (n2 * d1) / (d1 * d2), 0);
-		return subtraction;
+		return construct((n1 * d2) - (n2 * d1) , (d1 * d2));
 	}
 
 	
@@ -131,8 +120,7 @@ interface IRational {
 		int n2 = this.getNumerator();
 		int d1 = that.getDenominator();
 		int d2 = this.getDenominator();
-		IRational multiplication = construct((n1 * n2) / (d1 * d2), 0);
-		return multiplication;
+		return construct((n1 * n2) , (d1 * d2));
 	}
 
 	
@@ -157,11 +145,7 @@ interface IRational {
 		int n2 = this.getNumerator();
 		int d1 = that.getDenominator();
 		int d2 = this.getDenominator();
-		IRational division = construct((n1 / d1) / (n2 / d2), 0);
-		return division;
-		
-		
-		
-		
+		return construct((n1 * d2) , (d1 * n2));		
 	}
+	
 }

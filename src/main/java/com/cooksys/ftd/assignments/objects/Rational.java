@@ -1,11 +1,11 @@
 package com.cooksys.ftd.assignments.objects;
 
-import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
+//import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
 
 public class Rational implements IRational {
 	private int numerator;
 	private int denominator;
-	private Rational obj;
+	//private Rational obj;
 	
 	
     /**
@@ -21,25 +21,15 @@ public class Rational implements IRational {
      */
     public Rational(int numerator, int denominator) throws IllegalArgumentException {
     	if (denominator == 0) { throw new IllegalArgumentException(); }
-    }
-
-    /** //throw new MissingImplementationException();
-     * @return the numerator of this rational number
-     */
-    @Override
-    public int getNumerator() {
     	this.numerator = numerator;
-    	return numerator;
+    	this.denominator = denominator;
     }
 
-    /** //throw new MissingImplementationException();
-     * @return the denominator of this rational number
-     */
     @Override
-    public int getDenominator() {
-    	this.denominator = denominator;
-    	return denominator; 
-    }
+    public int getNumerator() { return numerator; }
+
+    @Override
+    public int getDenominator() { return denominator; }
 
     /**
      * Specializable constructor to take advantage of shared code between Rational and SimplifiedRational
@@ -66,14 +56,18 @@ public class Rational implements IRational {
      */
     @Override
     public boolean equals(Object obj) {
-    	if (this == obj) // if this.obj = obj
-			return true;
-		if (obj == null) // null wouldn't be correct
-			return false;
-		if (getClass() != obj.getClass()) // if the classes are not the same
-			return false;
-    	//if (obj.instanceOf(Rational));
-        throw new MissingImplementationException();
+    	if (this == obj) { return true; } // check if our object is the same as itself
+		if (obj == null) { return false; } // make sure our object is not null
+    	if (obj instanceof Rational) // if not same instanceof, then not same class
+    	{ 
+    	  Rational RatObj = (Rational) obj;
+    		if(RatObj.getNumerator() == this.getNumerator()) 
+    		{ //'this' refers to the object that is calling the method
+    			if(RatObj.getDenominator() == this.getDenominator())
+    				{ return true; }
+    		}
+    	}
+    	return false;
     }
 
     /**
@@ -85,6 +79,11 @@ public class Rational implements IRational {
      */
     @Override
     public String toString() {
-        throw new MissingImplementationException();
+    	// basic toString returns memory address
+    	if ((getNumerator() > 0 && getDenominator() > 0) || (getNumerator() < 0 && getDenominator() < 0))
+    	 { return getNumerator()+"/"+getDenominator(); }
+    	if ((getNumerator() > 0 && getDenominator() < 0) || (getNumerator() < 0 && getDenominator() > 0)) 
+    	 { return "-"+getNumerator()+"/"+getDenominator(); }
+        return "Fraction is undefined or zero.";
     }
 }

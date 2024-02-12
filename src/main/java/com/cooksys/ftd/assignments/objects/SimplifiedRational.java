@@ -1,12 +1,14 @@
 package com.cooksys.ftd.assignments.objects;
 
-import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
+//import com.cooksys.ftd.assignments.objects.util.MissingImplementationException;
 
 public class SimplifiedRational implements IRational {
 	
 	private int numerator;
 	private int denominator;
-	private SimplifiedRational Obj;
+	//private SimplifiedRational Obj;
+	
+	
     /**
      * Determines the greatest common denominator for the given values
      *
@@ -16,8 +18,8 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if a <= 0 or b < 0
      */
     public static int gcd(int a, int b) throws IllegalArgumentException {
-    	if(b < 0) { throw new IllegalArgumentException(); }
-        return gcd(Math.abs(b) % Math.abs(a), Math.abs(a));
+    	if((a <= 0) || (b < 0)) { throw new IllegalArgumentException(); }
+        return gcd(b % a, a);
     }
 
     /**
@@ -34,8 +36,17 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if the given denominator is 0
      */
     public static int[] simplify(int numerator, int denominator) throws IllegalArgumentException {
-    	gcd(Math.abs(numerator), Math.abs(denominator));
-        throw new MissingImplementationException();
+    	if (denominator == 0 ) { throw new IllegalArgumentException(); }
+    	int x = gcd(Math.abs(numerator), Math.abs(denominator));
+    	//populate simplify numbers with whatever gcd you get back
+    	int[] simplified = new int[2];
+    	simplified[0] = numerator/x;
+    	simplified[1] = denominator/x;
+    	//USING X: divivde num & denom by x to simplify them
+    	// return array of the simplified rational
+    	return simplified;
+    	//
+        //throw new MissingImplementationException();
     }
 
     /**
@@ -51,26 +62,17 @@ public class SimplifiedRational implements IRational {
      * @throws IllegalArgumentException if the given denominator is 0
      */
     public SimplifiedRational(int numerator, int denominator) throws IllegalArgumentException {
-        throw new MissingImplementationException();
-    }
-
-    /** //throw new MissingImplementationException();
-     * @return the numerator of this rational number
-     */
-    @Override
-    public int getNumerator() {
+    	if (denominator == 0) { throw new IllegalArgumentException(); }
     	this.numerator = numerator;
-    	return numerator;
+    	this.denominator = denominator;
     }
 
-    /** //throw new MissingImplementationException();
-     * @return the denominator of this rational number
-     */
+
     @Override
-    public int getDenominator() {
-    	this.denominator = denominator;
-    	return denominator; 
-    }
+    public int getNumerator() { return numerator; }
+
+    @Override
+    public int getDenominator() { return denominator; }
 
     /**
      * Specializable constructor to take advantage of shared code between Rational and SimplifiedRational
@@ -97,14 +99,18 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public boolean equals(Object obj) {
-    	if (this == obj) // if this.obj = obj
-			return true;
-		if (obj == null) // null wouldn't be correct
-			return false;
-		if (getClass() != obj.getClass()) // if the classes are not the same
-			return false;
-		//if (obj.instanceOf(SimplifiedRational))
-        throw new MissingImplementationException();
+    	if (this == obj) { return true; } // check if our object is the same as itself
+		if (obj == null) { return false; } // make sure our object is not null
+    	if (obj instanceof SimplifiedRational) // if not same instanceof, then not same class
+    	{ 
+    		SimplifiedRational SimRatObj = (SimplifiedRational) obj;
+    		if(SimRatObj.getNumerator() == this.getNumerator()) 
+    		{ //'this' refers to the object that is calling the method
+    			if(SimRatObj.getDenominator() == this.getDenominator())
+    				{ return true; }
+    		}
+    	}
+    	return false;
     }
 
     /**
@@ -116,6 +122,11 @@ public class SimplifiedRational implements IRational {
      */
     @Override
     public String toString() {
-        throw new MissingImplementationException();
+    	// basic toString returns memory address
+    	if ((getNumerator() > 0 && getDenominator() > 0) || (getNumerator() < 0 && getDenominator() < 0))
+    	 { return getNumerator()+"/"+getDenominator(); }
+    	if ((getNumerator() > 0 && getDenominator() < 0) || (getNumerator() < 0 && getDenominator() > 0)) 
+    	 { return "-"+getNumerator()+"/"+getDenominator(); }
+        return "Fraction is undefined or zero.";
     }
 }
